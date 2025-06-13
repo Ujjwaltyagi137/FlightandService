@@ -2,6 +2,9 @@
 const {City} = require('../models/index');
 
 class CityRepository{
+    constructor(){
+
+    }
 
     async createCity({name}){
     try{
@@ -9,9 +12,11 @@ class CityRepository{
         return city;
     }
     catch(error){
+            console.log("Semething went wrong");
             throw {error};
     }
     }
+
     async deleteCity( cityid){
     try{
         await City.destroy({
@@ -21,9 +26,36 @@ class CityRepository{
         })
     }
     catch(error){
-            throw {error};
-    }
+        console.log("Semething went wrong");
+        throw {error};
     }
 }
 
-module.exports = CityRepository
+    async updateCity(cityid, data){
+        try{
+            const city = City.update(data, {
+                where: {
+                    id : cityid
+                }
+            })
+        }
+        catch(error){
+
+        }
+
+    }
+
+    async getCity(cityid){
+        try{
+                const city = await City.findByPk(cityid);
+                return city;
+        }
+        catch(error){
+        console.log("Semething went wrong");
+        throw {error};
+        }
+
+    }
+}
+
+module.exports = CityRepository;
